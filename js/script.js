@@ -38,6 +38,10 @@ function createPagination() {
         newButton.innerHTML = newElementStr.trim()
         newButton.addEventListener('click', goToPage)
         paginationEle.appendChild(newButton)
+        if (i == 1) {
+            link = newButton.children
+            link[0].className += 'active'
+        }
     }
 }
 
@@ -48,8 +52,10 @@ function displayTotal() {
 
 function goToPage(e) {
     e.preventDefault()
-    let clickedEle = e.toElement
+    let clickedEle = e.target
     let selectedPage = clickedEle.innerHTML
+    resetPages()
+    setPageActive(clickedEle)
     displayUsers(selectedPage)
 }
 
@@ -70,4 +76,17 @@ function hideUsers(listElements) {
     for (let i = 0; i < listElements.length; i++) {
         listElements[i].style.display = 'none'
     }
+}
+
+function resetPages() {
+    let paginationEle = document.querySelector('.pagination')
+    let pages = paginationEle.children
+    for (let i = 0; i < pages.length; i++) {
+        page = pages[i].firstChild
+        page.classList.remove('active')
+    }
+}
+
+function setPageActive(page) {
+    page.className += 'active'
 }
